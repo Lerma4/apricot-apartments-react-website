@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { clsx } from "clsx";
@@ -16,16 +16,16 @@ export default function Navbar() {
             ScrollTrigger.create({
                 start: 'top -100px',
                 onUpdate: (self) => {
-                    if (self.progress > 0 && !isScrolled) {
-                        setIsScrolled(true);
-                    } else if (self.progress === 0 && isScrolled) {
-                        setIsScrolled(false);
+                    if (self.progress > 0) {
+                        setIsScrolled((prev) => (!prev ? true : prev));
+                    } else if (self.progress === 0) {
+                        setIsScrolled((prev) => (prev ? false : prev));
                     }
                 },
             });
         });
         return () => ctx.revert();
-    }, [isScrolled]);
+    }, []);
 
     return (
         <nav

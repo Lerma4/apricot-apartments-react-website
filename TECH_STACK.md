@@ -3,11 +3,12 @@
 Questo documento funge da fonte di verità per l'intero stack, l'architettura dei componenti e le decisioni prestazionali prese durante la costruzione della *Cinematic Landing Page* "Apricot Appartments".
 
 ## 1. Core Stack
-L'impianto si basa su tecnologie frontend ultra-veloci e robuste, scelte per massimizzare sia la flessibilità del design "Pixel Perfect" che le prestazioni (CSR & SSG compatibility).
+L'impianto si basa su tecnologie frontend ultra-veloci e robuste, scelte per massimizzare sia la flessibilità del design "Pixel Perfect" che le prestazioni SSR (Server-Side Rendering) a monte.
 
-- **Libreria Interfaccia**: **React (v18+)**
-- **Strumento di Build & Server**: **Vite** (Garantisce un Hot Module Replacement quasi istantaneo e un bundle di produzione ultra-minimizzato tramite Rollup).
-- **Routing**: **React Router DOM (v6)** - Utilizzato per la navigazione fluida SPA (Single Page Application) e per isolare logicamente la `Home` dalla pagina `ApartmentDetail`.
+- **Libreria Interfaccia**: **React (v19)**
+- **Framework & SSR Engine**: **Remix (v2)** - Gestisce nativamente il routing server-side, i data loader e l'idratazione client ottimali, eliminando la latenza delle vecchie SPA.
+- **Strumento di Build**: **Vite** (Integrato con il plugin Remix per un HMR fulmineo e build di produzione ultra-minimizzate).
+- **CMS File-based**: **Markdown/MDX** (`front-matter`) - I dati degli appartamenti sono gestiti tramite semplici file markdown che fungono da pseudo-database, estratti dai loader di Remix.
 
 ## 2. Ingegneria del Design & Styling (Preset "Organic Tech")
 - **CSS Framework**: **Tailwind CSS (v3)**
@@ -23,9 +24,9 @@ Le interazioni asincrone, al netto del Javascript event loop, sono state isolate
 - **Scroll Hijacking (Elegante)**: **GSAP ScrollTrigger Plugin** - Usato per agganciare le animazioni asincrone alla progressione esatta della barra di scroll (es. The Sticky Stacking Archive nel Protocollo o gli effetti Parallax nella sezione Philosophy).
 
 ## 4. Prestazioni Ingegnerizzate (Phase 2)
-Ogni scelta è stata pesata per garantire frame multipli senza cali:
-- **Code Splitting Dinamico**: La gerarchia in `App.jsx` utilizza `React.lazy` e `<Suspense>`. Significa che quando un utente carica la home page, scarica dal server ESCLUSIVAMENTE il javascript della home, senza l'overhead del codice del `ApartmentDetail`.
-- **Preload Critical Path (LCP)**: Le Hero section richiedevano immagini HD. Il file `index.html` ospita direttamente tag `<link rel="preload" as="image">` per scaricarle in contemporanea agli stili.
+Ogni scelta è stata pesata per garantire frame multipli senza cali ed eliminare overhead lato client:
+- **Server-Side Data Fetching**: Utilizzo dei `loader` di Remix per calcolare logiche di Markdown parsing o fetch dati in node (server) e inviare al client un HTML stringificato pulito e già popolato dal contenuto utile per la SEO.
+- **No Client-Side React.lazy()**: Abbiamo dismesso le complesse architetture client `<Suspense>` per delegare tutto al chunking nativo generato dai path router di Remix.
 - **Deep Memoization**: Interfacce animate perpetuamente (come *Cursor Protocol Scheduler* o *Telemetry Typewriter* in `Features.jsx`) invocano hooks `useState` continuamente. Sono composti mediante `React.memo` per evitare l'invalidazione della DOM (DOM repainting) sul container padre al variare dei context globale o dello scroll.
 - **GPU Accelerated Effects**: Il filtro noise organico del background (`noise-overlay` nel CSS) sfrutta nativamente il `feTurbulence` in SVG. Nessuna `.png` ripetuta nel livello visivo, per alleggerire istantaneamente la cache render.
 - **Scroll Rules**: Transizioni `scroll-behavior: smooth` forzate al layer root del CSS.

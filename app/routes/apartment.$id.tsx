@@ -1,19 +1,29 @@
 import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLoaderData } from '@remix-run/react';
+import type { LoaderFunctionArgs } from '@remix-run/node';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowLeft, Wifi, Coffee, Bath, Trees, Car, ThermometerSun } from 'lucide-react';
 
 import Footer from '../components/Footer';
+import { getApartment } from '../utils/mdx.server';
+
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+    const { id } = params;
+    if (!id) throw new Response("Not Found", { status: 404 });
+    const apartment = await getApartment(id);
+    if (!apartment) throw new Response("Not Found", { status: 404 });
+    return Response.json({ apartment });
+};
 
 export default function ApartmentDetail() {
-    const { id } = useParams();
+    const { apartment } = useLoaderData<typeof loader>();
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
         // Simple fade-up animation for the content
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             gsap.from('.detail-anim', {
                 y: 40,
                 opacity: 0,
@@ -23,8 +33,10 @@ export default function ApartmentDetail() {
                 delay: 0.2
             });
         });
-        return () => ctx.revert();
-    }, [id]);
+        return () => {
+            ctx.revert();
+        };
+    }, [apartment.slug]);
 
     const services = [
         { icon: <Wifi size={24} strokeWidth={1.5} />, name: "Wi-Fi Veloce (Starlink)" },
@@ -47,8 +59,8 @@ export default function ApartmentDetail() {
             {/* Hero Section 60vh */}
             <section className="relative h-[60vh] w-full overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop"
-                    alt="Rifugio Silva"
+                    src={apartment.coverImage}
+                    alt={apartment.title}
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
@@ -65,10 +77,10 @@ export default function ApartmentDetail() {
                             Appartamento Operativo
                         </div>
                         <h1 className="font-drama italic text-5xl md:text-7xl text-dark tracking-tighter leading-none">
-                            Rifugio Silva
+                            {apartment.title}
                         </h1>
                         <p className="font-sans text-dark/70 text-lg">
-                            2-4 Ospiti &bull; 1 Camera matrimoniale &bull; 1 Divano letto &bull; 1 Bagno
+                            {apartment.capacity} &bull; {apartment.features.join(" • ")}
                         </p>
                     </div>
 
@@ -76,9 +88,11 @@ export default function ApartmentDetail() {
 
                     <div className="detail-anim">
                         <h2 className="font-sans font-bold text-2xl mb-4">Lo Spazio</h2>
-                        <p className="font-sans text-dark/70 text-lg leading-relaxed max-w-[65ch]">
-                            Una meticolosa ristrutturazione ha restituito vita a queste antiche mura. Il Rifugio Silva offre un'esperienza organica: pietra grezza e legno lavorato artigianalmente si combinano con il comfort dei sistemi climatici discreti. Le ampie finestre annullano il confine tra interno e l'infinita estensione verde del bosco di Morsasco. Niente rumore, niente distrazioni: solo un riposo totale ed ininterrotto.
-                        </p>
+                        {/* Rendering the markdown body (parsed by front-matter) directly as text/HTML */}
+                        <div
+                            className="font-sans text-dark/70 text-lg leading-relaxed max-w-[65ch] whitespace-pre-wrap"
+                            dangerouslySetInnerHTML={{ __html: apartment.body }}
+                        />
                     </div>
 
                     <div className="detail-anim h-px w-full bg-dark/10"></div>
@@ -104,7 +118,7 @@ export default function ApartmentDetail() {
                     <div className="flex justify-between items-end mb-8">
                         <div className="flex flex-col">
                             <span className="font-sans text-dark/60 text-sm">Tariffa base</span>
-                            <span className="font-sans font-bold text-3xl tracking-tight text-dark">€85 <span className="font-medium text-lg text-dark/60">/ notte</span></span>
+                            <span className="font-sans font-bold text-3xl tracking-tight text-dark">{apartment.price}</span>
                         </div>
                     </div>
 
@@ -122,7 +136,7 @@ export default function ApartmentDetail() {
                         <div className="p-4 font-mono text-xs cursor-pointer flex justify-between items-center group">
                             <div>
                                 <span className="text-dark/40 uppercase block mb-1">Ospiti</span>
-                                <span className="group-hover:text-accent transition-colors">2 Ospiti</span>
+                                <span className="group-hover:text-accent transition-colors">{apartment.capacity}</span>
                             </div>
                         </div>
                     </div>

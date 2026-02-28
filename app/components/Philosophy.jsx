@@ -6,7 +6,7 @@ export default function Philosophy() {
     const containerRef = useRef(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             // Parallax effect on background
             gsap.to('.philo-bg', {
                 y: '20%',
@@ -32,7 +32,9 @@ export default function Philosophy() {
                 }
             });
         }, containerRef);
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+        };
     }, []);
 
     return (

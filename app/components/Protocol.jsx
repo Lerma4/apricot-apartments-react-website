@@ -57,7 +57,7 @@ export default function Protocol() {
     ];
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             // Setup micro-animations
             gsap.to('.rotating-pattern', { rotation: 360, duration: 20, repeat: -1, ease: 'linear', transformOrigin: 'center' });
             gsap.to('.scanner-line', { y: '200px', duration: 3, repeat: -1, ease: 'linear' }); // fixed scanner line distance instead of % due to GSAP bug with 100%
@@ -87,7 +87,9 @@ export default function Protocol() {
                 }
             });
         }, containerRef);
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+        };
     }, []);
 
     return (

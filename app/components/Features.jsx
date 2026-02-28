@@ -82,7 +82,7 @@ const CursorProtocolScheduler = React.memo(function CursorProtocolScheduler() {
     const containerRef = useRef(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
 
             tl.set('.cursor-svg', { x: 0, y: 0, scale: 1 })
@@ -101,7 +101,9 @@ const CursorProtocolScheduler = React.memo(function CursorProtocolScheduler() {
                 .to('.save-btn', { duration: 0.2, scale: 1 }, "<")
                 .to('.cursor-svg', { duration: 0.5, opacity: 0 }, "+=0.5")
         }, containerRef);
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+        };
     }, []);
 
     const days = ['L', 'M', 'M', 'G', 'V', 'S', 'D'];
@@ -134,7 +136,7 @@ export default function Features() {
     const containerRef = useRef(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             gsap.from('.feature-card', {
                 scrollTrigger: {
                     trigger: containerRef.current,
@@ -147,7 +149,9 @@ export default function Features() {
                 ease: 'power3.out'
             });
         }, containerRef);
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+        };
     }, []);
 
     return (

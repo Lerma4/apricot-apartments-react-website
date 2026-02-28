@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@remix-run/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Clock } from 'lucide-react';
 
-export default function Apartments() {
+export default function Apartments({ apartments = [] }) {
     const containerRef = useRef(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        let ctx = gsap.context(() => {
             gsap.from('.apt-card', {
                 scrollTrigger: {
                     trigger: containerRef.current,
@@ -21,7 +21,9 @@ export default function Apartments() {
                 ease: 'power3.out'
             });
         }, containerRef);
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+        };
     }, []);
 
     return (
@@ -40,32 +42,33 @@ export default function Apartments() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                    {/* Active Apartment */}
-                    <Link to="/apartment/1" className="apt-card group relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden bg-dark block">
-                        <img
-                            loading="lazy"
-                            src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=2070&auto=format&fit=crop"
-                            alt="Rifugio Silva"
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    {apartments.map((apt) => (
+                        <Link key={apt.slug} to={`/apartment/${apt.slug}`} className="apt-card group relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden bg-dark block">
+                            <img
+                                loading="lazy"
+                                src={apt.coverImage}
+                                alt={apt.title}
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-                        <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between">
-                            <div className="flex justify-between items-start">
-                                <div className="bg-cream/20 backdrop-blur-md border border-cream/20 px-4 py-2 rounded-full text-cream font-mono text-xs uppercase tracking-widest">
-                                    Disponibile
+                            <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between">
+                                <div className="flex justify-between items-start">
+                                    <div className="bg-cream/20 backdrop-blur-md border border-cream/20 px-4 py-2 rounded-full text-cream font-mono text-xs uppercase tracking-widest">
+                                        Disponibile
+                                    </div>
+                                    <div className="w-12 h-12 rounded-full bg-cream text-dark flex items-center justify-center translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                                        <ArrowUpRight size={20} strokeWidth={2} />
+                                    </div>
                                 </div>
-                                <div className="w-12 h-12 rounded-full bg-cream text-dark flex items-center justify-center translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
-                                    <ArrowUpRight size={20} strokeWidth={2} />
+
+                                <div>
+                                    <h3 className="font-drama italic text-4xl md:text-5xl text-cream mb-2">{apt.title}</h3>
+                                    <p className="text-cream/80 font-sans text-sm md:text-base max-w-sm">{apt.price} · {apt.capacity}</p>
                                 </div>
                             </div>
-
-                            <div>
-                                <h3 className="font-drama italic text-4xl md:text-5xl text-cream mb-2">Rifugio Silva</h3>
-                                <p className="text-cream/80 font-sans text-sm md:text-base max-w-sm">Dettagli in pietra e legno organico. Ideale per 2-4 persone.</p>
-                            </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    ))}
 
                     {/* In Preparation Apartment */}
                     <div className="apt-card relative h-[500px] md:h-[600px] rounded-[3rem] overflow-hidden bg-background border border-dark/10 group cursor-not-allowed">
