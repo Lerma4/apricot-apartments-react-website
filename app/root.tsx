@@ -4,11 +4,15 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "@remix-run/react";
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { useTranslation } from "react-i18next";
+import { useChangeLanguage } from "remix-i18next/react";
+import i18next from "./i18next.server";
 
 import tailwindStyles from "./tailwind.css?url";
 
@@ -26,12 +30,28 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export async function loader({ request }: LoaderFunctionArgs) {
+  const cookieHeader = request.headers.get("Cookie");
+  let locale = await i18next.getLocale(request);
+  console.log("[root.tsx loader] Cookie Header:", cookieHeader);
+  console.log("[root.tsx loader] Detected Locale:", locale);
+  return Response.json({ locale });
+}
+
+export let handle = {
+  i18n: "common",
+};
+
 gsap.registerPlugin(ScrollTrigger);
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  let loaderData = useRouteLoaderData<typeof loader>("root");
+  let locale = loaderData?.locale ?? "it";
+  let { i18n } = useTranslation();
+  useChangeLanguage(locale);
 
   return (
-    <html lang="en">
+    <html lang={locale} dir={i18n.dir()}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

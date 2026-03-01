@@ -2,6 +2,8 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  build: { target: "esnext" },
+  optimizeDeps: { esbuildOptions: { target: "esnext" } },
   plugins: [
     remix({
       future: {

@@ -17,10 +17,17 @@
     "clsx": "^2.1.1",
     "front-matter": "^4.0.2",
     "gsap": "^3.14.2",
+    "i18next": "^25.8.13",
+    "i18next-browser-languagedetector": "^8.2.1",
+    "i18next-fs-backend": "^2.6.1",
+    "i18next-http-backend": "^3.0.2",
     "isbot": "^4.4.0",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^16.5.4",
+    "react-router": "^7.13.1",
+    "remix-i18next": "^7.4.2",
     "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {

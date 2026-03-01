@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "home": "Rezeption",
+    "apartments": "Zufluchtsorte",
+    "philosophy": "Natur",
+    "contact": "Kontaktiere uns"
+  },
+  "hero": {
+    "title_primary": "Absolute Ruhe ist die",
+    "title_secondary": "Natur.",
+    "subtitle": "Ein Zufluchtsort im unteren Piemont. Neu renovierte Räume, in denen Komfort auf die organische Essenz des Territoriums trifft.",
+    "cta": "Verfügbarkeit Anfragen"
+  },
+  "footer": {
+    "description": "Gelassenheit durch Raumgestaltung. Die ultimativen Apartments im unteren Piemont.",
+    "nav_title": "Navigation",
+    "legal_title": "Rechtliches",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "rights": "Alle Rechte vorbehalten.",
+    "system_status": "Buchung Einsatzbereit"
+  }
+}

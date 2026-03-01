@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "home": "Accoglienza",
+    "apartments": "I Rifugi",
+    "philosophy": "Natura",
+    "contact": "Contattaci"
+  },
+  "hero": {
+    "title_primary": "Il riposo assoluto è la",
+    "title_secondary": "Natura.",
+    "subtitle": "Un rifugio nel basso Piemonte. Spazi appena ristrutturati dove il comfort incontra l'essenza organica del territorio.",
+    "cta": "Richiedi Disponibilità"
+  },
+  "footer": {
+    "description": "La serenità attraverso il design dello spazio. Gli appartamenti definitivi nel basso Piemonte.",
+    "nav_title": "Navigazione",
+    "legal_title": "Legale",
+    "privacy": "Privacy Policy",
+    "terms": "Termini di Servizio",
+    "rights": "Tutti i diritti riservati.",
+    "system_status": "Booking Operational"
+  }
+}

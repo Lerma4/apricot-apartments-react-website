@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
+    const { t } = useTranslation();
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -34,20 +36,20 @@ export default function Hero() {
             <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start gap-6">
                 <div className="flex flex-col">
                     <h1 className="hero-element text-cream font-sans font-bold text-4xl md:text-5xl lg:text-6xl tracking-tighter mb-2">
-                        Il riposo assoluto è la
+                        {t('hero.title_primary')}
                     </h1>
                     <span className="hero-element text-cream font-drama italic text-7xl md:text-8xl lg:text-[9rem] leading-[0.8] tracking-tight pr-4">
-                        Natura.
+                        {t('hero.title_secondary')}
                     </span>
                 </div>
 
                 <p className="hero-element text-cream/80 font-sans text-lg md:text-xl max-w-md leading-relaxed mt-4">
-                    Un rifugio nel basso Piemonte. Spazi appena ristrutturati dove il comfort incontra l'essenza organica del territorio.
+                    {t('hero.subtitle')}
                 </p>
 
                 <button onClick={() => document.getElementById('contatti').scrollIntoView({ behavior: 'smooth' })} className="hero-element mt-8 relative overflow-hidden bg-accent text-cream px-8 py-4 rounded-full text-base font-semibold transition-transform duration-300 hover:-translate-y-[1px] hover:scale-[1.03] group shadow-lg shadow-accent/20 cursor-pointer">
                     <span className="relative z-10 flex items-center gap-2">
-                        Richiedi Disponibilità
+                        {t('hero.cta')}
                     </span>
                     <div className="absolute inset-0 bg-white/20 translate-y-full transition-transform duration-300 group-hover:translate-y-0 z-0"></div>
                 </button>

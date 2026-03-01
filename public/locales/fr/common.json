@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "home": "Réception",
+    "apartments": "Refuges",
+    "philosophy": "Nature",
+    "contact": "Contactez-nous"
+  },
+  "hero": {
+    "title_primary": "Le repos absolu c'est la",
+    "title_secondary": "Nature.",
+    "subtitle": "Un refuge dans le bas Piémont. Des espaces récemment rénovés où le confort rencontre l'essence organique du territoire.",
+    "cta": "Demander une Disponibilité"
+  },
+  "footer": {
+    "description": "La sérénité à travers le design de l'espace. Les appartements définitifs dans le bas Piémont.",
+    "nav_title": "Navigation",
+    "legal_title": "Légal",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "rights": "Tous droits réservés.",
+    "system_status": "Réservation Opérationnelle"
+  }
+}

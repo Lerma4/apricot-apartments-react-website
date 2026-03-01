@@ -1,0 +1,23 @@
+{
+  "nav": {
+    "home": "Reception",
+    "apartments": "Refuges",
+    "philosophy": "Nature",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "title_primary": "Absolute rest is",
+    "title_secondary": "Nature.",
+    "subtitle": "A refuge in lower Piedmont. Newly renovated spaces where comfort meets the organic essence of the territory.",
+    "cta": "Request Availability"
+  },
+  "footer": {
+    "description": "Serenity through space design. The definitive apartments in lower Piedmont.",
+    "nav_title": "Navigation",
+    "legal_title": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "rights": "All rights reserved.",
+    "system_status": "Booking Operational"
+  }
+}
