@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLoaderData } from '@remix-run/react';
 import { getAllApartments } from '../utils/mdx.server';
+import Preloader from '../components/Preloader';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Features from '../components/Features';
@@ -20,6 +21,7 @@ export default function Home() {
 
     return (
         <>
+            <Preloader />
             <Navbar />
             <main>
                 <Hero />
